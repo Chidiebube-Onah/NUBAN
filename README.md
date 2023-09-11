@@ -1,7 +1,7 @@
 
 ---
 
-# Nigerian NUBAN Generation Library
+# NUBAN Generation Library
 
 ## Introduction
 
