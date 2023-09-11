@@ -31,7 +31,7 @@ namespace NUBAN
         /// <param name="bankCode">The code of the Nigerian commercial bank.</param>
         /// <returns>A valid NUBAN account number.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the serial number is longer than <see cref="SerialNumberLength"/>.</exception>
-        public static string CreateAccountWithSerial(string serialNumber, string bankCode)
+        public static string CreateAccount(string serialNumber, string bankCode)
         {
            
             // Pad the serial number to the specified length.

@@ -3,11 +3,42 @@
   <PropertyGroup>
 	
 	<TargetFrameworks>
-		net472;netcoreapp3.1;net5.0;
+		netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;
 		net6.0;net7.0
 	</TargetFrameworks>
 
 	  <Version>1.0.0</Version>
+
+	  <Title>NUBAN UTILITY</Title>
+
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+
+	  <PackageTags>NUBAN  Bank Fintech</PackageTags>
+
+	  <PackageIcon>NUBAN.jpg</PackageIcon>
+
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+	  <Authors>Chidiebube</Authors>
+
+	  <Description>A  nugget package to generate and Validate NUBAN</Description>
+
+	  <Copyright>2023</Copyright>
+
+	  <PackageProjectUrl>https://github.com/Chidiebube-Onah/NUBAN</PackageProjectUrl>
+
+	  <RepositoryUrl>https://github.com/Chidiebube-Onah/NUBAN</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Pictures\NUBAN.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
