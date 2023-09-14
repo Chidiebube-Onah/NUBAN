@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUBAN", "NUBAN\NUBAN.csproj", "{80C4B20E-19E3-4DF2-A2FA-1648BB319D49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{FFE3D498-5635-4033-BEEF-6700F3EFEB29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{80C4B20E-19E3-4DF2-A2FA-1648BB319D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C4B20E-19E3-4DF2-A2FA-1648BB319D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80C4B20E-19E3-4DF2-A2FA-1648BB319D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE3D498-5635-4033-BEEF-6700F3EFEB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE3D498-5635-4033-BEEF-6700F3EFEB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE3D498-5635-4033-BEEF-6700F3EFEB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE3D498-5635-4033-BEEF-6700F3EFEB29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

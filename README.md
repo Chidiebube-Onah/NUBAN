@@ -111,6 +111,40 @@ static List<Bank> GetAccountBanks(string accountNumber)
 
 ````
 
+## :star2: Whats New 
+
+### 1. Get Up to date banks in Nigeria
+```csharp
+// Example usage
+using NUBAN;
+
+Console.WriteLine("=========All Nigerian Banks=====================");
+
+
+foreach (var bank in await NUBANUtility.GetBanksAsync())
+{
+    Console.WriteLine($"{bank.name} - {bank.code}");
+}
+
+````
+
+### 2. Infer Bank(s) of an account number
+```csharp
+// Example usage
+using NUBAN;
+
+var accountNumber = "0589902233";
+
+Console.WriteLine($"Banks for {accountNumber}: ");
+
+foreach (var bank in await NUBANUtility.InferBanksAsync(accountNumber))
+{
+    Console.WriteLine($"{bank.name} - {bank.code}");
+}
+
+
+````
+
 ## Versioning
 
 This library follows Semantic Versioning (SemVer). The version number is specified in the project file (`.csproj`) and is used when creating NuGet packages.

@@ -1,5 +1,11 @@
-﻿using System;
+﻿using NUBAN.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace NUBAN
 {
@@ -23,6 +29,60 @@ namespace NUBAN
         /// The length of a complete NUBAN account number.
         /// </summary>
         private static readonly int NubanLength = 10;
+
+
+        /// <summary>
+        /// Gets a list of banks from a JSON file located at the specified URL.
+        /// </summary>
+        /// <returns>A list of Bank objects.</returns>
+        /// <exception cref="HttpRequestException">Thrown if there is an issue with the HTTP request.</exception>
+        /// <exception cref="Newtonsoft.Json.JsonException">Thrown if there is an issue with JSON deserialization.</exception>
+        public static async Task<IEnumerable<Bank>> GetBanksAsync()
+        {
+
+            var source = "https://raw.githubusercontent.com/Chidiebube-Onah/BanksInNigeria/main/BanksInNigeria.min.json";
+               
+            IEnumerable<Bank> banks = await ReadBanksFromJsonUrlAsync(source);
+
+            return banks;
+            
+        }
+
+        /// <summary>
+        /// Attempts to infer valid banks based on the provided account number.
+        /// </summary>
+        /// <param name="accountNumber">The account number to be used for inferring banks.</param>
+        /// <returns>A list of Bank objects that match the criteria based on the account number.</returns>
+        public static async Task<IEnumerable<Bank>> InferBanksAsync(string accountNumber)
+        {
+            var banks = (await GetBanksAsync()).ToList();
+
+         
+            foreach (var bank in banks.ToList())
+            {
+                // Criteria for inferring valid banks:
+                // - The bank code consists of only digits.
+                // - The bank code has a length of either 3 or 5 characters.
+                // - The provided account number is valid for the bank code.
+                var inferredUsingShortCode = bank.code.All(char.IsDigit) &&
+                               (bank.code.Length == 3 || bank.code.Length == 5) &&
+                               IsBankAccountValid(accountNumber, bank.code);
+
+                var inferredUsingLongCode = bank.code.All(char.IsDigit) &&
+                                             (bank.longcode.Length == 3 || bank.longcode.Length == 5) &&
+                                             IsBankAccountValid(accountNumber, bank.longcode);
+
+                // If the bank does not meet the criteria, remove it from the list
+                if (!(inferredUsingShortCode || inferredUsingLongCode))
+                {
+                    banks.Remove(bank);
+                }
+            }
+
+          
+            return banks;
+        }
+
 
         /// <summary>
         /// Generates a valid NUBAN account number based on the provided serial number and bank code.
@@ -111,6 +171,42 @@ namespace NUBAN
 
             return (checkDigit == 10) ? 0 : checkDigit;
         }
-    }
 
+
+
+        /// <summary>
+        /// Reads a JSON file containing bank data from a URL and returns a list of Bank objects.
+        /// </summary>
+        /// <param name="jsonFileUrl">The URL of the JSON file.</param>
+        /// <returns>A list of Bank objects.</returns>
+        /// <exception cref="HttpRequestException">Thrown if there is an issue with the HTTP request.</exception>
+        /// <exception cref="JsonException">Thrown if there is an issue with JSON deserialization.</exception>
+        private static async Task<IEnumerable<Bank>> ReadBanksFromJsonUrlAsync(string jsonFileUrl)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                  
+                    HttpResponseMessage response = await client.GetAsync(jsonFileUrl);
+
+                   
+                    response.EnsureSuccessStatusCode();
+
+                  
+                    string jsonData = await response.Content.ReadAsStringAsync();
+
+                    
+                    IEnumerable<Bank> banks = JsonConvert.DeserializeObject<IEnumerable<Bank>>(jsonData);
+
+                    return banks;
+                }
+            }
+            catch (Exception ex)
+            {
+              return new List<Bank>(0);
+            }
+           
+        }
+    }
 }
